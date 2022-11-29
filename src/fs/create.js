@@ -7,14 +7,12 @@ const create = async () => {
     const filePath = path.join(dirname, './files/fresh.txt');
 
     try {
-        await fs.access(filePath, fs.constants.F_OK);
-        throw new Error('FS operation failed');
+        await fs.writeFile(filePath, 'I am fresh and young', {
+            encoding: 'utf8',
+            flag: 'wx',
+        });
     } catch (error) {
-        if (error.code == 'ENOENT') {
-            await fs.writeFile(filePath, 'I am fresh and young', 'utf8');
-        } else {
-            throw error;
-        }
+        throw new Error('FS operation failed');
     }
 };
 
